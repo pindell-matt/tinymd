@@ -1,8 +1,4 @@
 
-// tinymd (v0.1.0), a tiny and mostly useless markdown compiler. 
-// Written by <Your Name>
-// Usage: tinymd <somefile.md>
-
 fn parse_markdown_file(filename: &str) {
     println!("TODO: parse {}", filename)
 }
