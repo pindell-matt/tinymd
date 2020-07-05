@@ -3,6 +3,7 @@ name = "tinymd"
 version = "0.1.0"
 authors = ["pindell-matt <pindell.m@protonmail.com>"]
 edition = "2018"
+description = "A tiny markdown compiler based on Jesse Lawson's tutorial."
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
