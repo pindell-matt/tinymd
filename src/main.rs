@@ -3,22 +3,17 @@
 // Written by <Your Name>
 // Usage: tinymd <somefile.md>
 
-fn print_short_banner() {
+fn print_banner() {
     let title = String::from(env!("CARGO_PKG_NAME"));
-    let version = String::from(env!("CARGO_PKG_VERSION"));
-    let usage = format!("Usage: {title} <somefile.md>", title = title);
-
-    let banner = format!(
+    print!(
         "{title} (v{version}), {description} \n{usage}",
         title = title,
-        version = version,
+        version = env!("CARGO_PKG_VERSION"),
         description = "a tiny and mostly useless markdown compiler",
-        usage = usage
+        usage = format!("Usage: {title} <somefile.md>", title = title)
     );
-
-    print!("{}", banner);
 }
 
 fn main() {
-    print_short_banner()
+    print_banner()
 }
