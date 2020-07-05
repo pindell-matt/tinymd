@@ -4,7 +4,7 @@ fn parse_markdown_file(filename: &str) {
 }
 
 fn print_banner() {
-    let title = String::from(env!("CARGO_PKG_NAME"));
+    let title = env!("CARGO_PKG_NAME");
     print!(
         "{title} (v{version}), {description} \n{usage}",
         title = title,
