@@ -2,35 +2,47 @@ use std::path::Path;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
+fn get_tag(markdown_tag: &str) -> &'static str {
+    match markdown_tag {
+        "#" => "h1",
+        _ => "p"
+    }
+}
+
 fn parse_markdown_file(filename: &str) {
     println!(" [ INFO ] Starting parser!");
 
     let path = Path::new(filename);
-    let file = File::open(&path)
-                 .expect(" [ ERROR ] Failed to open file!");
+    let file = File::open(&path).expect(" [ ERROR ] Failed to open file!");
     let reader = BufReader::new(file);
 
-    // let mut ptag = false;
-    // let mut htag = false;
-    // let mut tokens: Vec<String> = Vec::new();
-
     for line in reader.lines() {
-        let mut input_line = line.unwrap();
-        let mut first_char = input_line.chars().nth(0);
+        let input_line = line.unwrap();
 
-        // let mut output_line = String::new();
+        let mut output_line = String::new();
 
-        match first_char {
-            Some('#') => {
-                println!("<h1>{}</h1>", &input_line[2..])
-            },
-            Some('-') => {
-                println!("<li>{}</li>", &input_line[2..])
-            },
-            _ => {
-                println!("<p>{}</p>", &input_line)
-            }
+        if input_line.starts_with(|c: char| c.is_ascii_punctuation()) {
+            let element = input_line.split_whitespace().nth(0).unwrap();
+            let tag = get_tag(element);
+
+            let new_line = format!(
+                "<{tag}>{content}</{tag}>",
+                tag = tag,
+                content = &input_line[2..]
+            );
+
+            output_line.push_str(&new_line);
+        } else if !input_line.is_empty() {
+            let new_line = format!(
+                "<{tag}>{content}</{tag}>",
+                tag = "p",
+                content = &input_line
+            );
+
+            output_line.push_str(&new_line);
         }
+
+        println!("{}", output_line);
     }
 
 }
