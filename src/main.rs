@@ -62,13 +62,8 @@ fn parse_markdown_file(filename: &str) {
           tokens.push(output_line);
         }
     }
-
-
-    let output_filename = format!(
-        "{file}.html",
-        file = String::from(&filename[..filename.len()-3])
-    );
-
+ 
+    let output_filename = &filename.replace("md", "html");
     let mut outfile = File::create(output_filename)
         .expect(" [ ERROR ] Could not create output file");
 
