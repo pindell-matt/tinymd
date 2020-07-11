@@ -1,14 +1,14 @@
 use std::path::Path;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+use std::io::{BufRead, BufReader, Write};
 
 // struct holding states of active tags?
 
 fn html_content(tag: &str, content: &str) -> String {
     format!(
-      "<{tag}>{content}</{tag}>",
-      tag = tag,
-      content = content
+        "<{tag}>{content}</{tag}>",
+        tag = tag,
+        content = content
     )
 }
 
@@ -63,7 +63,21 @@ fn parse_markdown_file(filename: &str) {
         }
     }
 
-    println!("{:?}", tokens);
+
+    let output_filename = format!(
+        "{file}.html",
+        file = String::from(&filename[..filename.len()-3])
+    );
+
+    let mut outfile = File::create(output_filename)
+        .expect(" [ ERROR ] Could not create output file");
+
+    for line in &tokens {
+        outfile.write_all(line.as_bytes())
+            .expect(" [ ERROR ] Could not write to output file");
+    }
+
+    println!(" [ INFO ] Parsing complete!");
 }
 
 fn print_banner() {
