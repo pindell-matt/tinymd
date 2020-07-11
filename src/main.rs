@@ -20,7 +20,7 @@ fn get_tag(markdown_tag: &str) -> &'static str {
     }
 }
 
-fn parse_markdown_file(filename: &str) {
+fn parse_markdown_file(filename: &str) -> Vec<String> {
     println!(" [ INFO ] Starting parser!");
 
     let path = Path::new(filename);
@@ -62,20 +62,13 @@ fn parse_markdown_file(filename: &str) {
           tokens.push(output_line);
         }
     }
- 
-    let output_filename = &filename.replace("md", "html");
-    let mut outfile = File::create(output_filename)
-        .expect(" [ ERROR ] Could not create output file");
-
-    for line in &tokens {
-        outfile.write_all(line.as_bytes())
-            .expect(" [ ERROR ] Could not write to output file");
-    }
 
     println!(" [ INFO ] Parsing complete!");
+
+    return tokens;
 }
 
-fn print_banner() {
+fn print_usage_banner() {
     let title = env!("CARGO_PKG_NAME");
     print!(
         "{title} (v{version}), {description} \n{usage}",
@@ -86,14 +79,27 @@ fn print_banner() {
     );
 }
 
+fn runner(args: Vec<String>) {
+    let input_filename = &args[1];
+    let output_filename = &input_filename.replace("md", "html");
+    let mut outfile = File::create(output_filename)
+        .expect(" [ ERROR ] Could not create output file");
+
+    let tokens = parse_markdown_file(input_filename);
+    for line in &tokens {
+        outfile.write_all(line.as_bytes())
+            .expect(" [ ERROR ] Could not write to output file");
+    }
+}
+
 fn main() {
     let args: Vec<String> = std::env::args().collect();
 
     match args.len() {
-        2 => parse_markdown_file(&args[1]),
+        length if length >= 2 => runner(args),
         _ => {
             println!("\n[ ERROR ] Invalid invocation\n");
-            print_banner();
+            print_usage_banner();
         }
     }
 }
