@@ -2,19 +2,19 @@ use std::path::Path;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
 
-// struct holding states of active tags?
-
 fn html_content(tag: &str, content: &str) -> String {
     format!(
         "<{tag}>{content}</{tag}>",
         tag = tag,
-        content = content
+        content = content.trim()
     )
 }
 
 fn get_tag(markdown_tag: &str) -> &'static str {
     match markdown_tag {
         "#" => "h1",
+        "##" => "h2",
+        "###" => "h3",
         "*" | "+" | "-" => "li",
         _ => "p"
     }
