@@ -1,9 +1,11 @@
 
 # tinymd
 
-A tiny and terrible markdown compiler! It's just trying to live it's best life - and simply compiles simple Markdown files into valid HTML.
+A tiny and terrible markdown compiler!
 
-Got the ball rolling via inspiration from [Jesse Lawson's Article: Getting Started with Rust by Building a Markdown Compiler](https://jesselawson.org/rust/getting-started-with-rust-by-building-a-tiny-markdown-compiler/) - although I go about things a slightly different way.
+It is just out here trying to live its best life - compilin' simple Markdown files into valid HTML.
+
+I got the ball rolling via inspiration from [Jesse Lawson's Article: Getting Started with Rust by Building a Markdown Compiler](https://jesselawson.org/rust/getting-started-with-rust-by-building-a-tiny-markdown-compiler/) - although I go about things a slightly different way.
 
 ## Setup
 
